@@ -58,11 +58,11 @@ public class ClipServerService extends Service {
         }
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
-        return START_NOT_STICKY;
-    }
+//    @Override
+//    public int onStartCommand(Intent intent, int flags, int startId) {
+//        super.onStartCommand(intent, flags, startId);
+//        return START_NOT_STICKY;
+//    }
 
     @Nullable
     @Override
@@ -74,7 +74,7 @@ public class ClipServerService extends Service {
         super.onDestroy();
     }
 
-    private AudioInterface.Stub stubBinder = new AudioInterface.Stub() {
+    private final AudioInterface.Stub stubBinder = new AudioInterface.Stub() {
 
         public void onStartService() throws RemoteException{}
 
