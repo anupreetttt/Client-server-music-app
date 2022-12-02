@@ -79,36 +79,35 @@ public class ClipServerService extends Service {
         public void onStartService() throws RemoteException{}
 
         public void playAudio(int audioChoice){
-            if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), audioArray[audioChoice]);
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
             }
-
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), audioArray[audioChoice]);
+            mediaPlayer.start();
             if (mediaPlayer != null) {
                 mediaPlayer.setLooping(false);
 
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-//                        mediaPlayer.stop();
-//                        mediaPlayer.release();
-//                        mediaPlayer = null;
-                        onStop();
+                        mediaPlayer.stop();
+                        mediaPlayer.release();
+//                        onStop();
                     }
                 });
             }
-            mediaPlayer.start();
         }
 
         public void pauseAudio() throws RemoteException{
-            if (mediaPlayer != null) {
-                mediaPlayer.pause();
-            }
+            mediaPlayer.pause();
         }
 
         public void stopAudio() throws RemoteException{
-            if (mediaPlayer != null) {
-                onStop();
-            }
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+//                onStop();
         }
 
         public void onResume() throws RemoteException {
@@ -118,16 +117,19 @@ public class ClipServerService extends Service {
                  mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                      @Override
                      public void onCompletion(MediaPlayer mp) {
-                         onStop();
+                         mediaPlayer.stop();
+                         mediaPlayer.release();
+                         mediaPlayer = null;
+//                         stop();
                      }
                  });
             }
         }
-        public void onStop() {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
+//        public void onStop() {
+//            mediaPlayer.stop();
+//            mediaPlayer.release();
+//            mediaPlayer = null;
+//        }
 
         public void toStopService() throws RemoteException {
             if (mediaPlayer != null) {
@@ -138,7 +140,7 @@ public class ClipServerService extends Service {
             stopSelf();
         }
 
-        public int checkStatus() throws RemoteException
+        public int trackStatus() throws RemoteException
         {
             if (mediaPlayer == null){
                 return 0;

@@ -17,9 +17,8 @@ interface AudioInterface {
         void playAudio(int audioChoice);
         void pauseAudio();
         void stopAudio();
-        void onStop();
         void onResume();
         void toStopService();
-        int checkStatus();
+        int trackStatus();
         void onStartService();
 }
