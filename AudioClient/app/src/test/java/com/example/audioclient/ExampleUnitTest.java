@@ -1,4 +1,4 @@
-package com.example.clipserver;
+package com.example.audioclient;
 
 import org.junit.Test;
 
